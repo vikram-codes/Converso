@@ -12,7 +12,6 @@ const navItems = [
 
 function NavItems() {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <nav className="flex items-center gap-4">
       {navItems.map((item) => (
