@@ -12,6 +12,7 @@ import { addToSessionHistory } from "@/lib/actions/companion.action";
 interface CompanionComponentProps {
   companion: {
     subject: string;
+    id: string;
     topic: string;
     name: string;
     style: string;
