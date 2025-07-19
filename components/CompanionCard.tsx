@@ -12,7 +12,7 @@ interface CompanionCardProps {
   subject: string;
   duration: number;
   color: string;
-  bookmarked: boolean;
+  // bookmarked: boolean;
 }
 
 const CompanionCard = ({
