@@ -54,7 +54,9 @@ export const getCompanion = async (id: string) => {
     .from("companions")
     .select()
     .eq("id", id);
+
   if (error) return console.log(error);
+
   return data[0];
 };
 
@@ -71,12 +73,11 @@ export const addToSessionHistory = async (companionId: string) => {
   return data;
 };
 
-export const getRecentSessions = async (limit: 10) => {
+export const getRecentSessions = async (limit = 10) => {
   const supabase = createSupabaseClient();
-
   const { data, error } = await supabase
     .from("session_history")
-    .select("compaion_id:companions(*)")
+    .select(`companions:companion_id (*)`)
     .order("created_at", { ascending: false })
     .limit(limit);
 
@@ -85,12 +86,11 @@ export const getRecentSessions = async (limit: 10) => {
   return data.map(({ companions }) => companions);
 };
 
-export const getUserSession = async (userId: string, limit: number = 10) => {
+export const getUserSessions = async (userId: string, limit = 10) => {
   const supabase = createSupabaseClient();
-
   const { data, error } = await supabase
     .from("session_history")
-    .select("companion_id:companions(*)")
+    .select(`companions:companion_id (*)`)
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .limit(limit);
@@ -98,4 +98,16 @@ export const getUserSession = async (userId: string, limit: number = 10) => {
   if (error) throw new Error(error.message);
 
   return data.map(({ companions }) => companions);
+};
+
+export const getUserCompanions = async (userId: string) => {
+  const supabase = createSupabaseClient();
+  const { data, error } = await supabase
+    .from("companions")
+    .select()
+    .eq("author", userId);
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };
