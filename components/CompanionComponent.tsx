@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import soundwaves from "@/constants/soundwaves.json";
 import { configureAssistant } from "@/utils/utils";
+import { addToSessionHistory } from "@/lib/actions/companion.action";
 
 interface CompanionComponentProps {
   companion: {
@@ -32,7 +33,7 @@ function CompanionComponent({
   userName,
   userImage,
 }: CompanionComponentProps) {
-  const { subject, topic, name, style, voice } = companion;
+  const { subject, topic, name, id: companionId, style, voice } = companion;
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
@@ -53,7 +54,10 @@ function CompanionComponent({
   useEffect(() => {
     const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
-    const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
+    const onCallEnd = () => {
+      setCallStatus(CallStatus.FINISHED);
+      addToSessionHistory(companionId);
+    };
 
     const onMessage = (message: Message) => {
       if (message.type === "transcript" && message.transcriptType === "final") {
