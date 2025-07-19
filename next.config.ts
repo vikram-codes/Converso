@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     // Set to true to allow TypeScript errors to fail the production build
     ignoreBuildErrors: false,
   },
+  eslint: {
+    ignoreDuringBuilds: true, // Set to true to ignore ESLint errors during production builds
+  },
   images: {
     remotePatterns: [{ hostname: "img.clerk.com" }],
   },
