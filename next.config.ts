@@ -17,7 +17,7 @@ export default withSentryConfig(nextConfig, {
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 
   org: "hehe-h6",
-  project: "javascript-nextjs",
+  project: "converso",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
