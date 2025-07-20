@@ -4,13 +4,17 @@ import Cta from "@/components/CTA";
 import {
   getAllCompanions,
   getRecentSessions,
+  getUserSessions,
 } from "@/lib/actions/companion.action";
 import { getSubjectColor } from "@/lib/utils";
+import { currentUser } from "@clerk/nextjs/server";
 import React from "react";
 
 const Page = async () => {
   const companions = await getAllCompanions({ limit: 3 });
-  const receentSessionsCompanions = await getRecentSessions(10);
+  const user = await currentUser();
+  console.groupEnd();
+  const userRecentSessions = await getUserSessions(user?.id);
   return (
     <main>
       <h1>Popular Companions</h1>
@@ -54,7 +58,7 @@ const Page = async () => {
       <section className="home-section">
         <CompanionsList
           title="Recently Completed Sessions"
-          companions={receentSessionsCompanions}
+          companions={user ? userRecentSessions : []}
           classNames="w-2/3 max-lg:w-full"
         />
         <Cta />
