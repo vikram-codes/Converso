@@ -14,7 +14,7 @@ const Page = async () => {
   const companions = await getAllCompanions({ limit: 3 });
   const user = await currentUser();
   console.groupEnd();
-  const userRecentSessions = await getUserSessions(user?.id);
+  const userRecentSessions = user?.id ? await getUserSessions(user.id) : [];
   return (
     <main>
       <h1>Popular Companions</h1>
