@@ -1,9 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
-const Cta = () => {
+interface CtaProps {
+  className?: string;
+}
+
+const Cta: React.FC<CtaProps> = ({ className }) => {
   return (
-    <section className="cta-section">
+    <section className={`cta-section ${className}`}>
       <div className="cta-badge">Start learning your way.</div>
       <h2 className="text-3xl font-bold">
         Build and Personalize Learning Companion
